@@ -1,0 +1,82 @@
+/* Basic reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #d6d6d6;
+  color: #333;
+  line-height: 1.6;
+}
+
+header {
+  background-color: #0077cc;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 2.5rem;
+}
+
+nav a {
+  color: #ffffff;
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.hover-grow {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: inline-block;  /* Keeps the element inline but allows transformations */
+  overflow: visible;      /* Prevent clipping when scaling */
+}
+
+.hover-grow:hover {
+  transform: scale(1.5);  /* Scale the image on hover */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);  /* Add shadow */
+  z-index: 10;            /* Ensure the image appears above other elements */
+  position: relative;     /* Allow stacking with z-index */
+}
+
+
+section {
+  margin: 20px;
+  padding: 20px;
+  overflow: visible;
+}
+
+section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+section p {
+  font-size: 1rem;
+}
+#about {
+  overflow: visible;
+}
+
+img {
+  border-radius: 10px;
+  display: block;
+  margin: 10px 0;
+}
+
+footer {
+  background-color: #0077cc;
+  color: white;
+  padding: 40px 20px; /* Increase the padding to make the footer larger */
+  height: auto;
+}
+
+
+
+footer p {
+  font-size: 0.9rem;
+}
