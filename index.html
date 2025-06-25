@@ -11,10 +11,60 @@
       padding: 0;
       box-sizing: border-box;
     }
+    /* Sidebar fixed on right */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 60px; /* collapsed width */
+      height: 100vh;
+      background-color: #005fa3;
+      transition: width 0.3s ease;
+      overflow: hidden;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 0;
+    }
+
+    .sidebar:hover {
+      width: 250px; /* expanded width */
+      border: 2px solid #004080
+    }
+
+    /* Main content with right margin to avoid sidebar */
+    .scaled-content {
+      margin-left: 0px; /* space for sidebar */
+      transition: margin-right 0.3s ease, transform 0.3s ease;
+      max-width: calc(100% - 60px);
+      padding: 20px;
+      box-sizing: border-box;
+
+      transform: scale(1.1); /* Scale up 10% as example */
+      transform-origin: left top; /* Scale from top-left corner */
+    }
+
+
+    .sidebar:hover + .scaled-content {
+      margin-right: 250px; /* push content left when sidebar expands */
+      max-width: calc(100% - 250px);
+    }
+
+    header {
+      background-color: #0077cc;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 5px;
+      width: 100%;
+
+    }
 
     body {
       font-family: 'Roboto', sans-serif;
-      background-color: #d6d6d6;
+      background: url('images/background.png') no-repeat center center fixed;
+      background-size: cover;
       color: #333;
       line-height: 1.6;
       padding-right: 250px;
@@ -39,7 +89,6 @@
       position: relative;
     }
 
-    /* nav-link animation */
     .nav-link::after {
       content: '';
       position: absolute;
@@ -60,9 +109,11 @@
     }
 
     section {
-      margin: 20px;
-      padding: 20px;
+      margin: 60px 20px; /* Top-bottom spacing increased */
+     padding: 40px 20px; /* More inner space */
+      overflow: visible;
     }
+
 
     section h2 {
       font-size: 1.8rem;
@@ -77,47 +128,44 @@
       border-radius: 10px;
       display: block;
       margin: 10px 0;
-      transition: transform 0.3s ease; /* Also needed here if .hover-grow is not used */
+      transition: transform 0.3s ease;
     }
 
-
-      footer {
-    background-color: #0077cc;
-    color: white;
-    padding: 40px 20px !important; /* Force the padding */
-    height: 150px !important; /* Force the height */
-    text-align: center;
-    font-size: 1.2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
+    footer {
+      background-color: #0077cc;
+      color: white;
+      padding: 40px 20px !important;
+      height: 20vh !important;
+      text-align: center;
+      font-size: 1.2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100vw
+    }
 
     footer p {
       font-size: 1.9rem;
     }
 
-        /* Fake Ad styles */
-        /* Fake Ad styles */
-        .fake-ad {
+    .fake-ad {
       position: fixed;
-      bottom: 0; /* Align to the bottom of the screen */
-      left: 0; /* Align to the right */
-      width: 86.2vw;
-      height: 5vh; /* Set a fixed height for the ad */
+      bottom: 0;
+      left: 0;
+      width: 86.2vw; /*86.2vw for the width to be everything but sidebar when extended */
+      height: 5vh;
       background-color: #005fa3;
       padding: 20px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       text-align: center;
       font-size: 1rem;
       display: flex;
-      justify-content: space-between; /* Space between text and button */
-      align-items: center; /* Vertically align the items */
+      justify-content: space-between;
+      align-items: center;
     }
 
     .fake-ad h3, .fake-ad p {
-      margin: 0; /* Remove default margin */
+      margin: 0;
     }
 
     .fake-ad button {
@@ -127,14 +175,13 @@
       padding: 10px 20px;
       cursor: pointer;
       border-radius: 5px;
-      margin-left: 10px; /* Space between the text and the button */
+      margin-left: 10px;
     }
 
     .fake-ad button:hover {
       background-color: #005fa3;
     }
 
-    /* New styles */
     html {
       scroll-behavior: smooth;
     }
@@ -156,57 +203,290 @@
       animation: floating 3s ease-in-out infinite;
     }
 
+    #languages {
+      display: flex;
+      gap: 20px; /* optional spacing between buttons */
+      flex-wrap: wrap; /* allow wrapping on small screens */
+      align-items: flex-start; /* align items to top */
+    }
+    .button-small {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 0.5%;
+      background-color: #0bd5f0;
+      padding: 0.5%;
+      border-radius: 12px;
+      display: flex;
+      width: fit-content;
+      position: relative; /* Add this */
+      cursor: pointer;
+      align-items: center;
+    }
+    .button-small .icon {
+      width: 16px;              /* Smaller image to match text */
+      height: 16px;
+      border-radius: 4px;       /* Optional: slightly round image corners */
+      object-fit: contain;
+    }
+    .button-small h3 {
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .button-details {
+      position: absolute;
+      top: 100%; /* below button */
+      left: 0;
+      background-color: #d0f0fb;
+      color: #004d66;
+      padding: 8px 12px;
+      border-radius: 8px;
+      white-space: normal;
+      width: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: width 0.5s ease, opacity 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      pointer-events: none;
+      z-index: 10;
+      display: none;
+    }
+
+    .button-small.expanded .button-details {
+      width: 600%;
+      opacity: 1;
+      pointer-events: auto;
+      display: block;
+    }
+
+
+    /* Expanded state */
+    .button-small.expanded {
+      /* optionally, add some padding-bottom to make space for details */
+      padding-bottom: 0%;
+      padding-right: 2%;
+    }
+
     @keyframes floating {
       0% { transform: translateY(0px); }
       50% { transform: translateY(-15px); }
       100% { transform: translateY(0px); }
     }
 
-    .gradient-text {
-      background: linear-gradient(45deg, #3b82f6, #8b5cf6);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+    .high-contrast .gradient-bordered-text {
+  display: inline-block; /* Makes the h1 size wrap the text */
+  padding: 10px 20px;
+  background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
     }
+
+
+    .nav-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  color: white;
+  text-decoration: none;
+  width: 100%;
+  transition: background 0.3s;
+}
+
+.nav-item:hover {
+  background-color: #004080;
+}
+
+.icon {
+  font-size: 24px;
+  width: 40px;
+  text-align: center;
+  transition: margin 0.3s ease;
+}
+
+.label {
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Show labels when sidebar expands */
+.sidebar:hover .label {
+  opacity: 1;
+}
+#about p {
+  font-weight: 700;
+}
+.high-contrast {
+  background-color: #111 !important;
+  color: #f8f8f8 !important;
+}
+
+.high-contrast header,
+.high-contrast footer,
+.high-contrast .sidebar,
+.high-contrast .project-card,
+.high-contrast .fake-ad {
+  background-color: #222 !important;
+  color: #f8f8f8 !important;
+}
+.high-contrast .button-small {
+  background-color: #222 !important;
+  color: #f8f8f8 !important;
+}
+.high-contrast .nav-link:hover::after {
+  background-color: #ffcc00 !important;
+}
+body.high-contrast {
+  font-family: 'Roboto', sans-serif;
+  background: url('images/cave-purple-2.jpg') no-repeat center center fixed !important;
+  background-size: cover !important;   /* <-- Change here */
+  color: #333;
+  line-height: 1.6;
+  padding-right: 250px;
+}
+
+.high-contrast .gradient-text {
+  background: none;
+  color: #ffd700 !important;
+}
+
+
+    
   </style>
 </head>
 <body>
-  <header>
-    <h1><span class="gradient-text">Zephen's Portfolio</span></p></h1>
-    <nav>
-      <a class="nav-link" href="#about">About</a>
-      <a class="nav-link" href="#projects">Other Projects</a>
-      <a class="nav-link" href="#contact">Contact</a>
-    </nav>
-  </header>
 
-  <section id="about">
-    <h2>About Me:</h2>
-    <img src="images/profile.jpg" alt="My Photo" class="hover-grow" width="150" />
-    <p>Hello! I'm a computing student passionate about cybersecurity and game development.</p>
-  </section>
+  <div class="scaled-content">
 
-  <section id="achievement">
-    <h2>My Achievements:</h2>
-    <p>18th In YCEP 2025 despite it being my first CTF</p>
-  </section>
+    <header>
+      <h1 class="gradient-bordered-text">Zephen's Portfolio</h1> 
 
-  <section id="projects">
-    <h2>My Projects:</h2>
-    <div class="project-card">
-      <h3>Gun Game (Godot Engine)</h3>
-      <p>A simple shooting game built using the Godot Engine.</p>
-    </div>
-    <div class="project-card">
-      <h3>This website</h3>
-      <p>A personal portfolio to showcase my work and skills.</p>
-    </div>
-  </section>
+      <nav>
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#projects">Other Projects</a>
+        <a class="nav-link" href="#contact">Contact</a>
+      </nav>
+    </header>
 
-  <section id="contact">
-    <h2>Contact Me</h2>
-    <p>Email: <a href="mailto:Theodore_tan_zephen@students.edu.sg">Theodore_tan_zephen@students.edu.sg</a></p>
-  </section>
+    <section id="about">
+      <h2>About Me:</h2>
+      <img src="images/profile.jpg" alt="My Photo" class="hover-grow" width="150" />
+      <p>
+      <div style ="width: 80%;">
+        <span style="font-weight: 800;">
+      Hello! I'm a computing student who is passionate about cybersecurity and game development. I have been quite curious about coding & cybersecurity since I took Computing in Secondary Three. On the other hand, I have always been curious of how games were made, and how they are developed. I really enjoy programming, and have used it for quite a few smaller programs which have sparked a desire in me to further my studies in Computing. The subjects I enjoy are Math, A-Math, Computing, and Chemistry. On the other hand, my humanities are my weaker subjects.
+        </span>
+      </div>
+    </section>
+
+    <section id="achievement">
+  <h2>My Achievements(click on them to learn more about the programmes.):</h2>
+  <p>
+    <span style="font-weight: 800;">
+      18th In 
+      <a href="https://www.csa.gov.sg/our-programmes/talent-and-skills-development/sg-cyber-talent/sg-cyber-youth/youth-cyber-exploration-programme" target="_blank" style="text-decoration: none; color: inherit;">
+        Youth Cybersecurity Exploration Programme
+      </a> 
+      2025 for my first CTF
+    </span><br>
+    <span style="font-weight: 800;">
+      Participated in 
+      <a href="https://ntaexam.net/nco-2025/" target="_blank" style="text-decoration: none; color: inherit;">
+        National Cybersecurity Olympiad
+      </a> 
+      and learnt much from the humbling experience.
+    </span>
+  </p>
+</section>
+
+    <section id="Hobbies">
+      <h2>My Hobbies:</h2>
+      <p>
+      <div style="width: 80%;">
+  <span style="font-weight: 700;">
+    I enjoy playing games, going on runs with my family, playing with code or doing seemingly useless math problems that involve things in my day to day life in my downtime. On the other hand, I also like to visit Coffeebean & Tealeaf while studying, and reading manga or novels.
+  </span>
+      </div>
+      <p>
+    </section>
+
+    <section id="languages">
+      <h2>Languages(Press on them):</h2>
+      <div class="button-small" onclick="toggleDetails(this)">
+        <img src="images/1887_python.png" alt="Python Logo" class="icon" />
+        <h3>Python</h3>
+        <div class="button-details">
+          Python is a versatile, high-level programming language used for web development, data science, automation, and more. I find myself quite well versed in python, and while I think there is more to learn, I am most confident in my skills in python compared to other languages.
+        </div>
+      </div>
+
+      <div class="button-small" onclick="toggleDetails(this)">
+        <img src="images/html.png" alt="Python Logo" class="icon" />
+        <h3>html</h3>
+        <div class="button-details">
+          HTML is a foundational, markup-based language used for structuring webpages, organizing content, defining elements, and more. I have learned much about html while making this website, and I have found it fun to code this website while taking in feedback from my family about what to change.
+        </div>
+      </div>
+
+      <div class="button-small" onclick="toggleDetails(this)">
+        <img src="images/C-sharp.jpg" alt="Python Logo" class="icon" />
+        <h3>C#</h3>
+        <div class="button-details">
+          C# is a modern, object-oriented programming language used for building applications, automating tasks, creating web services, developing games with Unity, and more. It emphasizes structure, reusability, and type safety across a wide range of platforms. I have only very recently started to learn C#, and I am hoping to explore further into the differences between C# and other coding languages.
+        </div>
+      </div>
+
+      <div class="button-small" onclick="toggleDetails(this)">
+        <img src="images/C-sharp.jpg" alt="Python Logo" class="icon" />
+        <h3>C#</h3>
+        <div class="button-details">
+          C# is a modern, object-oriented programming language used for building applications, automating tasks, creating web services, developing games with Unity, and more. It emphasizes structure, reusability, and type safety across a wide range of platforms. I have only very recently started to learn C#, and I am hoping to explore further into the differences between C# and other coding languages.
+        </div>
+      </div>
+
+    </section>
+
+    <section id="projects">
+      <h2>My Projects:</h2>
+      <div class="project-card">
+        <h3>Gun Game (Godot Engine)</h3>
+        <p>A simple shooting game built using the Godot Engine.</p>
+      </div>
+      <div class="project-card">
+        <h3>Replit</h3>
+        <p>My python projects, All probably quite small.</p>
+      </div>
+    </section> <!-- Turn my hobbies into basic points or buttons, make my projects folder expand to show other things, add a languages section, let the buttons expand to show more about it, add emojis next to achievements for links to the actual website.-->
+  
+  </div> <!-- end .scaled-content -->
+
+    <section id="contact">
+      <h2>Contact Me</h2>
+      <p style="font-weight: 700;">Email: <a href="mailto:Zeph3tan@gmail.com" style="color: #3b82f6;">Zeph3tan@gmail.com</a></p>
+
+    </section>
+
+
+  
+  <div class="sidebar">
+  <a class="nav-item" href="#about">
+    <span class="icon">👤</span>
+    <span class="label">About</span>
+  </a>
+  <a class="nav-item" href="#projects">
+    <span class="icon">🛠️</span>
+    <span class="label">Projects</span>
+  </a>
+  <a class="nav-item" href="#contact">
+    <span class="icon">📬</span>
+    <span class="label">Contact</span>
+  </a>
+  <a class="nav-item" href="#" onclick="toggleContrast()">
+  <span class="icon">🎨</span>
+  <span class="label">Contrast</span>
+  </a>
+
+  </div>
 
   <div class="fake-ad">
     <h3>Accept Our Awesome Student!</h3>
@@ -217,5 +497,23 @@
   <footer>
     <p>© 2025 Zephen Tan Theodore</p>
   </footer>
+  <script>
+  function toggleContrast() {
+    document.body.classList.toggle("high-contrast");
+  }
+  function toggleDetails(button) {
+    const allButtons = document.querySelectorAll('.button-small');
+
+    allButtons.forEach(btn => {
+      if (btn !== button) {
+        btn.classList.remove('expanded'); // collapse others
+      }
+    });
+
+    button.classList.toggle('expanded'); // toggle clicked one
+  } 
+
+  </script>
+
 </body>
 </html>
